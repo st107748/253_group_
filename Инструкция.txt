@@ -1,37 +1,52 @@
-Clone репозитория, делает каждый студент
+сlone репозитория, делает каждый студент
 
-Зайти в родит. папку и сделать копию репоз-я в папку MyDir
-
+зайти в родит. папку 
 
 git clone https://github.com/nlebedin/class-Matrix-253-group.git MyDir
- 
+// сделать копию репозитория в папку MyDir 
 
-cd MyDir
+cd MyDir  // переходим в папку MyDir  (cd -- change directory)
 
-git branch
+git branch  // посмотреть, какие есть ветки
 
-создать ветку для работы
+git checkout -b forWork  // создать на локальном компьютере ветку для работы forWork и перейти в эту ветку
 
-git checkout -b forWork
+git branch   // снова смотрим, какие есть ветки
 
-git branch
+Далее положить новый файл в папку MyDir через проводник
 
-положить новый файл в папку MyDir через проводник
+git status  
 
-git status
+git add test.cpp  // добавляем файл test.cpp
 
-git add test.cpp
+git commit -m 'Имя студента'  // сохраняем изменения
 
-git commit -m 'Имя студента'
+git checkout master   // переходим в ветку master на локальном компьютере  
+(через проводник увидим, что не будет файла test.cpp)
 
-git checkout master   // не будет файла test.cpp
 
-сливаем в основную ветку
+git merge forWork  // сливаем ветку forWork в основную ветку master     (заметим, что файл test.cpp опять появился)
 
-git merge forWork  // опять два файла (test.cpp появится)
+git push origin master // отправим в удаленный Git-репозиторий
 
-опять отправим в удаленный git-репозиторий
+заходим в Git-репозиторий и проверяем изменения 
 
-git push origin master
 
-смотрим в git-репозиторий
+-----------------------------------
+
+
+push --delete origin existing_branch
+
+Удаление удаленной ветки
+
+
+
+git rm dirname/somefile.js
+
+Удаление файла из основного дерева
+
+// затем нужно сделать команды
+// git commit -m 'комментарий'   и  git push origin master
+
+
+
