@@ -1,11 +1,11 @@
-сlone репозитория, делает каждый студент
+сlone Git-репозитория nlebedin (делает каждый студент)
 
-зайти в родит. папку 
+зайти в папку на локальном компьютере, в которую будет копироваться содержимое репозитория
 
 git clone https://github.com/nlebedin/class-Matrix-253-group.git MyDir
-// сделать копию репозитория в папку MyDir 
+// сделать копию репозитория в папку MyDir
 
-cd MyDir  // переходим в папку MyDir  (cd -- change directory)
+cd MyDir  // переходим в папку MyDir  (cd от change directory)
 
 git branch  // посмотреть, какие есть ветки
 
@@ -15,38 +15,18 @@ git branch   // снова смотрим, какие есть ветки
 
 Далее положить новый файл в папку MyDir через проводник
 
-git status  
+git status
 
 git add test.cpp  // добавляем файл test.cpp
 
 git commit -m 'Имя студента'  // сохраняем изменения
 
-git checkout master   // переходим в ветку master на локальном компьютере  
+git checkout master   // переходим в ветку master на локальном компьютере
 (через проводник увидим, что не будет файла test.cpp)
 
 
-git merge forWork  // сливаем ветку forWork в основную ветку master     (заметим, что файл test.cpp опять появился)
+git merge forWork  // сливаем ветку forWork в основную ветку master    (заметим, что файл test.cpp опять появился)
 
 git push origin master // отправим в удаленный Git-репозиторий
 
-заходим в Git-репозиторий и проверяем изменения 
-
-
------------------------------------
-
-
-push --delete origin existing_branch
-
-Удаление удаленной ветки
-
-
-
-git rm dirname/somefile.js
-
-Удаление файла из основного дерева
-
-// затем нужно сделать команды
-// git commit -m 'комментарий'   и  git push origin master
-
-
-
+заходим в Git-репозиторий и проверяем изменения
