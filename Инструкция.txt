@@ -1,0 +1,37 @@
+Clone репозитория, делает каждый студент
+
+Зайти в родит. папку и сделать копию репоз-я в папку MyDir
+
+
+git clone https://github.com/nlebedin/class-Matrix-253-group.git MyDir
+ 
+
+cd MyDir
+
+git branch
+
+создать ветку для работы
+
+git checkout -b forWork
+
+git branch
+
+положить новый файл в папку MyDir через проводник
+
+git status
+
+git add test.cpp
+
+git commit -m 'Имя студента'
+
+git checkout master   // не будет файла test.cpp
+
+сливаем в основную ветку
+
+git merge forWork  // опять два файла (test.cpp появится)
+
+опять отправим в удаленный git-репозиторий
+
+git push origin master
+
+смотрим в git-репозиторий
