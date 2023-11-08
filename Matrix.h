@@ -14,5 +14,4 @@ public:
 #include "Aleksey.h"
 #include "Mariya.h"
 #include "Peidze.h"
-
 };
