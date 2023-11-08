@@ -4,8 +4,8 @@
 class Matrix
 {
 private:
-	int n; // число строк
-	int m; // число столбцов
+	int n; // number of rows
+	int m; // number of columns 
 	vector <vector<double>> a;
 
 public:
