@@ -1,19 +1,5 @@
 #include"Masha.h"
 
-
-    void GetMatrix()
-    {
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < m; ++j)
-            {
-                cout << this->a[i][j] << " ";
-            }
-            cout << endl;
-        }
-    }
-
-
     vector<double> operator* (const vector<double>& v1)
     {
         if (this->m != v1.size())
@@ -34,7 +20,6 @@
             }
             return v2;
         }
-
     }
 
     Matrix operator| (const Matrix& b)
@@ -77,29 +62,22 @@
         }
         return c;
 
-
     }
 
     double MatrixNorm() const
-    {
-        
+    {  
         double max = -1;
-
         for (int i = 0; i < n; ++i)
         {
             double ti = 0;
             for (int j = 0; j < m; ++j)
-            {
-                
-                ti += abs(this->a[i][j]);
-                
-                
+            { 
+                ti += abs(this->a[i][j]);   
             }
             if (max < ti)
             {
                 max = ti;
             }
         }
-        return max;
-        
+        return max;  
     }
