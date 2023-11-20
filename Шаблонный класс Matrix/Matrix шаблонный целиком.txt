@@ -1,0 +1,476 @@
+ 
+#include <iostream>
+#include <vector>
+#include <ctime>  
+#include <algorithm>
+
+ 
+using namespace std;
+
+template <class T>
+class Matrix<T>;
+
+template <class T>
+std::ostream& operator << (std::ostream& st, Matrix<T> & a);
+// template <class T> ?
+std::istream& operator >> (std::istream& st, Matrix<T> & a);
+
+template <class T>
+class Matrix
+{
+private:
+	int n; // number of rows
+	int m; // number of columns  
+	vector <vector<T>> a;
+
+public:
+
+	Matrix(int n_ = 0, int m_ = 0) : n(n_), m(m_),
+		a(n_, vector<double>(m_, 0)) {}
+
+	T& operator () (int i, int j);
+	Matrix<T> operator*(const Matrix<T>& b);
+	Matrix<T> operator^(const Matrix<T>& b);
+
+	Matrix<T> Trans();
+	Matrix<T> operator &(Matrix<T> B);
+	Matrix<T> RowChange(int i, int j);
+
+	vector<T> operator* (const vector<T>& v1);
+	Matrix<T> operator| (const Matrix<T>& b);
+	double MatrixNorm() const;
+
+	bool luDecomposition(Matrix<T>& L, Matrix<T>& U);
+	
+	template <>
+	friend std::ostream& operator << (std::ostream& st, Matrix<T> & a);
+	//template <>?
+	friend std::istream& operator >> (std::istream& st, Matrix<T> & a);
+
+};
+
+template <class T>
+T& Matrix<T>::operator () (int i, int j)
+// перегруженная операция вызова функции  
+{
+	if (i < 0 || i > n || j < 0 || j > m)
+		throw "Invalid range";
+	return a[i][j];
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator*(const Matrix& b)
+{
+	if (this->m != b.n)
+	{
+		std::cout << "multiplication error";
+		return *this;
+	}
+	else
+	{
+		Matrix c;
+		c.n = this->n;
+		c.m = b.m;
+		c.a.resize(n);
+		for (int i = 0; i <= n - 1; ++i)
+		{
+			c.a[i].resize(b.m);
+		}
+		double q = 0;
+		for (int i = 0; i <= this->n - 1; ++i)
+		{
+			for (int j = 0; j <= b.m - 1; ++j)
+			{
+				for (int k = 0; k <= this->m - 1; ++k)
+				{
+					q += this->a[i][k] * b.a[k][j];
+				}
+				c.a[i][j] = q;
+				q = 0;
+			}
+		}
+		return c;
+	}
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator^(const Matrix<T>& b)
+{
+	Matrix<T> c;
+	c.n = this->n + b.n;
+	c.m = this->m + b.m;
+	c.a.resize(this->n + b.n);
+	for (int i = 0; i <= this->n + b.n - 1; ++i)
+	{
+		c.a[i].resize(b.m + this->m);
+	}
+	for (int i = 0; i <= this->n - 1; ++i)
+	{
+		for (int j = 0; j <= this->m - 1; ++j)
+		{
+			c.a[i][j] = this->a[i][j];
+		}
+	}
+	for (int i = this->n; i <= this->n + b.n - 1; ++i)
+	{
+		for (int j = this->m; j <= this->m + b.m - 1; ++j)
+		{
+			c.a[i][j] = b.a[i - this->n][j - this->m];
+		}
+	}
+	return c;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::Trans()
+{
+	Matrix B(m, n);
+	for (int i = 0; i < m; ++i)
+	{
+		for (int j = 0; j < n; ++j)
+		{
+			B.a[i][j] = a[j][i];
+		}
+	}
+	return B;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator &(Matrix<T> B)
+{
+	if (m > B.m)
+	{
+		for (int i = 0; i < B.n; ++i)
+		{
+			B.a[i].resize(m);
+		}
+	}
+	if (m < B.m)
+	{
+		for (int i = 0; i < n; ++i)
+		{
+			a[i].resize(B.m);
+			m = B.m;
+		}
+	}
+
+	Matrix<T> C(n + B.n, m);
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			C.a[i][j] = a[i][j];
+		}
+	}
+	for (int i = n; i < n + B.n; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			C.a[i][j] = B.a[i - n][j];
+		}
+	}
+	return C;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::RowChange(int i, int j)
+{
+	std::vector <double> v;
+	v = a[i];
+	std::vector <double> u;
+	u = a[j];
+	Matrix<T> C(n, m);
+	C.a.resize(n);
+	for (int k = 0; k < n; ++k)
+	{
+		C.a[i].resize(m);
+		if (k != i && k != j)
+		{
+			for (int s = 0; s < m; ++s)
+			{
+				C.a[k][s] = a[k][s];
+
+			}
+
+		}
+		if (k == i)
+		{
+			for (int s = 0; s < m; ++s)
+			{
+				C.a[k][s] = u[s];
+			}
+		}
+		if (k == j)
+		{
+			for (int s = 0; s < m; ++s)
+			{
+				C.a[k][s] = v[s];
+			}
+		}
+	}
+	return C;
+}
+
+template <class T>
+vector<T> Matrix<T>::operator* (const vector<T>& v1)
+{
+	if (this->m != v1.size())
+	{
+		throw "Incorrect sizes";
+	}
+	else
+	{
+		vector<T> v2(this->n);
+		for (int i = 0; i < this->n; ++i)
+		{
+			for (int j = 0; j < this->m; ++j)
+			{
+				v2[i] += this->a[i][j] * v1[j];
+			}
+		}
+		return v2;
+	}
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator| (const Matrix<T>& b)
+{
+	Matrix<T> c;
+	int h;
+	int k;
+	h = max(this->n, b.n);
+	k = this->m + b.m;
+	c.n = h;
+	c.m = k;
+	c.a.resize(h);
+	for (int i = 0; i < h; ++i)
+	{
+		c.a[i].resize(k);
+	}
+
+	for (int i = 0; i < h; ++i)
+	{
+		for (int j = 0; j < k; ++j)
+		{
+			if (i < this->n && j < this->m)
+			{
+				c.a[i][j] = this->a[i][j];
+			}
+			if (i >= this->n && j < this->m)
+			{
+				c.a[i][j] = 0;
+			}
+			if (i < b.n && j >= this->m)
+			{
+				c.a[i][j] = b.a[i][j - this->m];
+			}
+			if (i > b.n && j >= this->m)
+			{
+				c.a[i][j] = 0;
+			}
+		}
+	}
+	return c;
+
+}
+
+template <class T>
+double Matrix<T>::MatrixNorm() const
+{
+	double max = -1;
+	for (int i = 0; i < n; ++i)
+	{
+		double ti = 0;
+		for (int j = 0; j < m; ++j)
+		{
+			ti += abs(this->a[i][j]);
+		}
+		if (max < ti)
+		{
+			max = ti;
+		}
+	}
+	return max;
+}
+
+template <class T>
+bool Matrix<T>::luDecomposition(Matrix<T>& L, Matrix<T>& U)
+{
+	if (n < m)
+	{
+		std::cout << "LU decomposition is not possible for the given matrix." << std::endl;
+		return false;
+	}
+
+	Matrix<T> lower;
+	Matrix<T> upper;
+
+	lower.n = n, lower.m = m;
+	upper.n = upper.m = m;
+
+	lower.a.resize(n);
+	for (int i = 0; i < n; ++i)
+		lower.a[i].resize(m);
+
+	upper.a.resize(m);
+	for (int i = 0; i < m; ++i)
+		upper.a[i].resize(m);
+
+	// Decomposition
+	for (int i = 0; i < m; i++)
+	{
+		// Upper Triangular
+		for (int k = i; k < m; k++)
+		{
+			// Summation of L(i, j) * U(j, k)
+			double sum = 0;
+			for (int j = 0; j < i; j++)
+				sum += (lower.a[i][j] * upper.a[j][k]);
+
+			// Evaluating U(i, k)
+			upper.a[i][k] = a[i][k] - sum;
+		}
+
+		// Lower Triangular
+		for (int k = i; k < n; k++)
+		{
+			if (i == k)
+				lower.a[i][i] = 1; // Diagonal as 1
+			else
+			{
+				// Summation of L(k, j) * U(j, i)
+				double sum = 0;
+				for (int j = 0; j < i; j++)
+					sum += (lower.a[k][j] * upper.a[j][i]);
+
+				// Evaluating L(k, i)
+				lower.a[k][i] = (a[k][i] - sum) / upper.a[i][i];
+			}
+		}
+	}
+
+	// Printing the LU decomposition
+	std::cout << "Lower Triangular Matrix (L):" << std::endl;
+	std::cout << lower << std::endl;
+
+	std::cout << std::endl << "Upper Triangular Matrix (U):" << std::endl;
+	std::cout << upper << std::endl;
+
+	L = lower;
+	U = upper;
+	return true;
+}
+
+template <class T>
+std::ostream& operator << (std::ostream& st, Matrix<T>& a)
+{
+	st << std::endl;
+	for (int i = 0; i <= a.n - 1; ++i)
+	{
+		for (int j = 0; j <= a.m - 1; ++j)
+		{
+			st << a.a[i][j] << "\t";
+		}
+		st << std::endl;
+	}
+	return st;
+}
+
+template <class T>
+std::istream& operator >> (std::istream& st, Matrix<T>& a)
+{
+	st >> a.n >> a.m;
+	std::vector<std::vector<T>> b(a.n);
+	for (int i = 0; i <= a.n - 1; ++i)
+	{
+		b[i].resize(a.m);
+		for (int j = 0; j <= a.m - 1; ++j)
+		{
+			T k;
+			st >> k;
+			b[i][j] = k;
+		}
+	}
+	a.a = b;
+	return st;
+}
+
+int  main() {}
+int main2()
+{
+	srand(time(NULL));
+	int n = rand() % 9 + 1;
+	int m = rand() % 9 + 1;
+	int r = rand() % 9 + 1;
+	int c = rand() % 9 + 1;
+	int i = rand() % n, j = rand() % n;
+
+	r = m;  // для произведения матриц
+
+	Matrix<double> A(n, m), B(r, c), C(n, n), D;
+	vector<double> b(m), d;
+	for (auto& x : b)
+	{
+		x = rand() % 10;
+		// std::cout << x << "\t";
+	}
+
+	Matrix<double> L, U;
+	std::cout << "Matrix A: " << n << " x " << m << std::endl;
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < m; ++j)
+			A(i, j) = rand() % 10;
+	std::cout << A << std::endl;
+
+
+	std::cout << "Matrix B: " << rand() % 9 + 1 << " x " << c << std::endl;
+	for (int i = 0; i < r; ++i)
+		for (int j = 0; j < c; ++j)
+			B(i, j) = rand() % 10;
+	std::cout << B << std::endl;
+
+	std::cout << "Matrix A*B: " << std::endl;
+	D = A * B;
+	std::cout << D << std::endl << std::endl;
+
+	std::cout << "Block-diagonal matrix from A and B: " << std::endl;
+	D = A ^ B;
+	std::cout << D << std::endl << std::endl;
+
+	std::cout << "A | B (extended matrix): " << std::endl;
+	D = A | B;
+	std::cout << D << std::endl << std::endl;
+
+
+
+	std::cout << "Change the rows " << i << " and " << j << " of matrix A: " << std::endl;
+	D = A.RowChange(i, j);
+	std::cout << D << std::endl << std::endl;
+
+	std::cout << "Transposed matrix of A: " << std::endl;
+	D = A.Trans();
+	std::cout << D << std::endl << std::endl;
+
+	std::cout << "Matrix A&B: " << std::endl;
+	D = A & B;
+	std::cout << D << std::endl << std::endl;
+
+	std::cout << "Matrix A*b, b - vector: " << std::endl << std::endl;
+	d = A * b;
+	for (auto x : d)
+		std::cout << x << "\t";
+	std::cout << std::endl << std::endl << std::endl;
+
+	std::cout << "Matrix C: " << n << " x " << n << std::endl;
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < n; ++j)
+			C(i, j) = rand() % 10;
+	std::cout << C << std::endl << std::endl << std::endl;
+
+	std::cout << "Norm of matrix C: " << C.MatrixNorm() << std::endl << std::endl;
+
+	C.luDecomposition(L, U);
+
+	return EXIT_SUCCESS;
+}
+ 
