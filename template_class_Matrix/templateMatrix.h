@@ -6,10 +6,10 @@
 using namespace std;
 
 template <class T>
-class Matrix;  // объ€вление шаблонного класса  Matrix,
-// потребовалось дл€ функций operator << и operator >>,
-// не €вл€ющимис€ методами
-
+class Matrix;  // declaration of template class Matrix 
+// required for the operator << and operator >>,
+// which are functions (not methods)
+  
 
 template <class T>
 std::ostream& operator << (std::ostream& st, Matrix<T>& a);
@@ -51,3 +51,10 @@ public:
 	friend std::istream& operator >> <>(std::istream& st, Matrix<T>& a);
 
 };
+
+
+#include "Egor.h"
+#include "Aleksey.h"
+#include "Masha.h"
+#include "Peize.h"
+
