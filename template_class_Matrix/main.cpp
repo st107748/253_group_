@@ -10,8 +10,8 @@ int main()
 	int c = rand() % 9 + 1;
 	int i = rand() % n, j = rand() % n;
 
-	r = m;  // для произведения матриц
-
+	r = m;  // for matrix multiplication 
+ 
 	Matrix<double> A(n, m), B(r, c), C(n, n), D;
 	vector<double> b(m), d;
 	for (auto& x : b)
