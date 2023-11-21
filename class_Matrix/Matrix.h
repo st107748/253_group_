@@ -1,14 +1,26 @@
 #pragma once
+#include<iostream>
 #include<vector>
+
 
 class Matrix
 {
 private:
 	int n; // number of rows
 	int m; // number of columns 
-	vector <vector<double>> a;
+	std::vector<std::vector<double>> a;
 
 public:
+	Matrix(int n_ = 0, int m_ = 0) : n(n_), m(m_),
+		a(n_, std::vector<double>(m_, 0)) {} 
+
+	double& operator () (int i, int j) 
+	{
+		if (i < 0 || i > n || j < 0 || j > m)
+			throw "Invalid range";
+		return a[i][j];
+	}
+	// overloaded function call operator    
 
 #include "Egor.h"
 #include "Aleksey.h"

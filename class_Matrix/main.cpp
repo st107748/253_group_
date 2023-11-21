@@ -1,3 +1,7 @@
+#include<ctime>
+
+#include"Matrix.h"
+
 int main()
 {
 	srand(time(NULL));
@@ -10,7 +14,7 @@ int main()
 	r = m;  // для произведения матриц
 
 	Matrix A(n, m), B(r, c), C(n, n), D;
-	vector<double> b(m), d;
+	std::vector<double> b(m), d;
 	for (auto & x : b)
 	{
 		x = rand() % 10;
