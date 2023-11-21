@@ -36,8 +36,8 @@ public:
 	Matrix<T> operator^(const Matrix<T>& b);
 
 	Matrix<T> Trans();
-	Matrix<T> operator &(Matrix<T> B);
-	Matrix<T> RowChange(int i, int j);
+	Matrix<T> operator& (Matrix<T> B);
+	Matrix<T> RowChange (int i, int j);
 
 	vector<T> operator* (const vector<T>& v1);
 	Matrix<T> operator| (const Matrix<T>& b);
@@ -46,10 +46,9 @@ public:
 	bool luDecomposition(Matrix<T>& L, Matrix<T>& U);
 
 
-	friend std::ostream& operator << <>(std::ostream& st, Matrix<T>& a);
-	// operator << -- шаблонная функция 
+	friend std::ostream& operator << <>(std::ostream& st, Matrix<T>& a); 
 	friend std::istream& operator >> <>(std::istream& st, Matrix<T>& a);
-
+	// operator <<, operator >>  -- template functions
 };
 
 
