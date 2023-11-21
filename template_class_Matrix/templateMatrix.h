@@ -3,8 +3,6 @@
 #include <iostream>
 #include <vector>  
 
-using namespace std;
-
 template <class T>
 class Matrix;  // declaration of template class Matrix 
 // required for the operator << and operator >>,
@@ -44,7 +42,6 @@ public:
 	double MatrixNorm() const;
 
 	bool luDecomposition(Matrix<T>& L, Matrix<T>& U);
-
 
 	friend std::ostream& operator << <>(std::ostream& st, Matrix<T>& a); 
 	friend std::istream& operator >> <>(std::istream& st, Matrix<T>& a);
