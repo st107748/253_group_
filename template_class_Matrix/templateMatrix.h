@@ -7,8 +7,8 @@ using namespace std;
 
 template <class T>
 class Matrix;  // declaration of template class Matrix 
-			  // required for the operator << and operator >>,
-			 // which are functions (not methods)
+	       // required for the operator << and operator >>,
+	       // which are functions (not methods)
   
 
 template <class T>
