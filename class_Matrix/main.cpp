@@ -11,7 +11,7 @@ int main()
 	int c = rand() % 9 + 1;
 	int i = rand() % n, j = rand() % n;
 
-	r = m;  // äëÿ ïðîèçâåäåíèÿ ìàòðèö
+	r = m;  // for matrix multiplication  
 
 	Matrix A(n, m), B(r, c), C(n, n), D;
 	std::vector<double> b(m), d;
