@@ -11,7 +11,7 @@ int main()
 	int c = rand() % 9 + 1;
 	int i = rand() % n, j = rand() % n;
 
-	r = m;  // для произведения матриц
+	r = m;  // Г¤Г«Гї ГЇГ°Г®ГЁГ§ГўГҐГ¤ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶
 
 	Matrix A(n, m), B(r, c), C(n, n), D;
 	std::vector<double> b(m), d;
@@ -29,7 +29,7 @@ int main()
 	std::cout << A << std::endl;
 
 
-	std::cout << "Matrix B: " << rand() % 9 + 1 << " x " << c << std::endl;
+	std::cout << "Matrix B: " << r << " x " << c << std::endl;
 	for (int i = 0; i < r; ++i)
 		for (int j = 0; j < c; ++j)
 			B(i, j) = rand() % 10;
