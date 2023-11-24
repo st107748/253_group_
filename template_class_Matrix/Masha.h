@@ -1,16 +1,3 @@
-
- 
-vector<T> operator* (const vector<T>& v1);
-     
- 
-Matrix operator| (const Matrix& b);
-    
- 
-T MatrixNorm() const;
-    
- 
-};
-
 template<class T>
 vector<T> Matrix<T>::operator* (const vector<T>& v1)
     {
@@ -19,7 +6,6 @@ vector<T> Matrix<T>::operator* (const vector<T>& v1)
             cout << "error";
             return v1;
         }
- 
         else
         {
             vector<T> v2(this->n);
@@ -74,6 +60,7 @@ vector<T> Matrix<T>::operator* (const vector<T>& v1)
         }
         return c;
     }
+
 T Matrix<T>::MatrixNorm() const
     {
  
