@@ -38,7 +38,7 @@ public:
 	Matrix<T> operator& (Matrix<T> B);
 	Matrix<T> RowChange (int i, int j);
 
-	vector<T> operator* (const vector<T>& v1);
+	std::vector<T> operator* (const std::vector<T>& v1);
 	Matrix<T> operator| (const Matrix<T>& b);
 	T MatrixNorm() const;
 
