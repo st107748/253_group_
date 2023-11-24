@@ -12,7 +12,6 @@ class Matrix;  // declaration of template class Matrix
   
 template <class T>
 std::ostream& operator << (std::ostream& st, Matrix<T>& a);
-
 template <class T>
 std::istream& operator >> (std::istream& st, Matrix<T>& a);
 
@@ -28,7 +27,12 @@ public:
 	Matrix(int n_ = 0, int m_ = 0) : n(n_), m(m_),
 		a(n_, vector<double>(m_, 0)) {}
 
-	T& operator () (int i, int j);
+	T& operator () (int i, int j)   // overloaded function call operator
+	{  if (i < 0 || i > n || j < 0 || j > m)
+			throw "Invalid range";
+		return a[i][j];
+	}
+
 	Matrix<T> operator*(const Matrix<T>& b);
 	Matrix<T> operator^(const Matrix<T>& b);
 
