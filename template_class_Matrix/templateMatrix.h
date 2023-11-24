@@ -42,7 +42,7 @@ public:
 
 	vector<T> operator* (const vector<T>& v1);
 	Matrix<T> operator| (const Matrix<T>& b);
-	double MatrixNorm() const;
+	T MatrixNorm() const;
 
 	bool luDecomposition(Matrix<T>& L, Matrix<T>& U);
 
