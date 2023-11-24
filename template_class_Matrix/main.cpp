@@ -1,5 +1,5 @@
-#include <ctime>  
 #include "templateMatrix.h"
+
 
 int main()
 {
@@ -10,10 +10,10 @@ int main()
 	int c = rand() % 9 + 1;
 	int i = rand() % n, j = rand() % n;
 
-	r = m;  // for matrix multiplication 
- 
+	r = m;  // for matrix multiplication  
+
 	Matrix<double> A(n, m), B(r, c), C(n, n), D;
-	vector<double> b(m), d;
+	std::vector<double> b(m), d;
 	for (auto& x : b)
 	{
 		x = rand() % 10;
@@ -28,7 +28,7 @@ int main()
 	std::cout << A << std::endl;
 
 
-	std::cout << "Matrix B: " << rand() % 9 + 1 << " x " << c << std::endl;
+	std::cout << "Matrix B: " << r << " x " << c << std::endl;
 	for (int i = 0; i < r; ++i)
 		for (int j = 0; j < c; ++j)
 			B(i, j) = rand() % 10;
