@@ -19,11 +19,11 @@ class Matrix
 private:
 	int n; // number of rows
 	int m; // number of columns  
-	vector <vector<T>> a;
+	std::vector <std::vector<T>> a;
 public:
 
 	Matrix(int n_ = 0, int m_ = 0) : n(n_), m(m_),
-		a(n_, vector<double>(m_, 0)) {}
+		a(n_, std::vector<double>(m_, 0)) {}
 
 	T& operator () (int i, int j)   // overloaded function call operator
 	{  if (i < 0 || i > n || j < 0 || j > m)
