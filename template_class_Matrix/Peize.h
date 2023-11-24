@@ -1,11 +1,6 @@
 #ifndef PEIZE_H_INCLUDED
 #define PEIZE_H_INCLUDED
 
-#include <vector>
-#include <algorithm>
-
-#include "Matrix.h"
-
 template <class T>
 bool Matrix::luDecomposition(Matrix<T>& L, Matrix<T>& U)
 {
