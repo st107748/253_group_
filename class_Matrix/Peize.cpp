@@ -64,7 +64,7 @@ bool Matrix::luDecomposition(Matrix& L, Matrix& U)
         std::cout << std::endl;
     }
 
-    std::cout << "Upper Triangular Matrix (U):" << std::endl;
+    std::cout << std::endl << "Upper Triangular Matrix (U):" << std::endl;
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < m; j++)
             std::cout << upper.a[i][j] << "\t";
