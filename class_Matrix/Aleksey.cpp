@@ -1,6 +1,6 @@
 #include"Matrix.h"
 
-Matrix Matrix::operator*(const Matrix& b)
+Matrix::Matrix operator*(const Matrix& b)
 {
     if (this->m != b.n)
     {
