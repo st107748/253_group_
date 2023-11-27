@@ -1,6 +1,7 @@
+#include <algorithm>
 #include"Matrix.h"
 
-std::vector<double> operator* (const std::vector<double>& v1)
+std::vector<double> Matrix::operator* (const std::vector<double>& v1)
 {
 	if (this->m != v1.size())
 	{
@@ -22,7 +23,7 @@ std::vector<double> operator* (const std::vector<double>& v1)
 	}
 }
 
-Matrix operator| (const Matrix& b)
+Matrix Matrix::operator| (const Matrix& b)
 {
 	Matrix c;
 	int h;
@@ -64,7 +65,7 @@ Matrix operator| (const Matrix& b)
 
 }
 
-double MatrixNorm() const
+double Matrix::MatrixNorm() const
 {
 	double max = -1;
 	for (int i = 0; i < n; ++i)
